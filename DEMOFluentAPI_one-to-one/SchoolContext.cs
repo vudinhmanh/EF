@@ -5,25 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1
+namespace DEMOFluentAPI_one_to_one
 {
     public class SchoolContext : DbContext
     {
-        //entities
-        public DbSet<Student>? Students { get; set; }
-        //public DbSet<Grade>? Grades { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=SchoolDb;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=VuDinhManh\\SQLEXPRESS;Database=EFCore-SchoolDB;Trusted_Connection=True");
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Student>()
-                    .Property(s => s.StudentId)
-                    .HasColumnName("Id")
-                    .HasDefaultValue(0)
-                    .IsRequired();
+                .HasOne<StudentAddress>(s => s.Address)
+                .WithOne(ad => ad.Student)
+                .HasForeignKey<StudentAddress>(ad => ad.AddressOfStudentId);
         }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<StudentAddress> StudentAddresses { get; set; }
     }
 }
