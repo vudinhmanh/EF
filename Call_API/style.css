@@ -1,0 +1,130 @@
+*{
+  padding:0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+div {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+input[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 300px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.header-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.open-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    /* bottom: 23px; */
+    right: 28px;
+    width: 280px;
+}
+.form-popup {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+}
+.form-container {
+    max-width: 300px;
+    padding: 10px;
+    background-color: white;
+}
+.form-container input[type=text], .form-container input[type=email], .form-container input[type=number] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+.form-container input[type=text]:focus, .form-container input[type=email]:focus, .form-container input[type=number]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+.form-container .btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+}
+.form-container .cancel {
+    background-color: red;
+}
+.form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+}
+.header-btn input[type=text] {
+    width: 400px;
+    outline: none;
+}

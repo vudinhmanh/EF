@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD Application</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <h1>Danh sách nhân viên tại FPT Software</h1>
+
+  <!-- Radio buttons to select which table to display -->
+  <div>
+    <input type="radio" id="studentOption" name="viewOption" value="students" onclick="showTable('students')" checked>
+    <label for="studentOption">Quản lý Sinh viên thực tập</label>
+
+    <input type="radio" id="leaderOption" name="viewOption" value="leaders" onclick="showTable('leaders')">
+    <label for="leaderOption">Quản lý Leader</label>
+  </div>
+  <div class="header-btn">
+    <div style="display: inline;">
+      <input type="text" id="searchInput" placeholder="Nhập họ tên, số điện thoại hoặc email cần tìm">
+      <button onclick="search()">Search</button>
+    </div>
+    <button class="open-button" onclick="openForm()">Thêm</button>
+  </div>
+
+  <div id="studentTable">
+    <table>
+      <h2>Danh sách sinh viên thực tập</h2>
+      <br>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tên</th>
+          <th>Số điện thoại</th>
+          <th>Email</th>
+          <th>Chức vụ</th>
+          <th>GPA</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody id="allStudent">
+      </tbody>
+    </table>
+  </div>
+  <!-- Table for leaders -->
+  <div id="leaderTable" style="display: none;">
+    <table>
+      <h2>Danh sách leader</h2>
+      <br>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tên</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Chức vụ</th>
+          <th>Lương</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody id="allProfessor">
+      </tbody>
+    </table>
+  </div>
+  <!-- Popup thêm sinh viên-->
+  <div class="form-popup" id="fromStudent" style="display:none;">
+    <form class="form-container" id="addStudentForm">
+      <h1>Thêm sinh viên</h1>
+      <label for="name"><b>Name:</b></label>
+      <input type="text" id="name" name="name" required placeholder="Enter Name">
+
+      <label for="phone"><b>Số điện thoại:</b></label>
+      <input type="text" id="phone" name="phone" required placeholder="Enter Phone">
+
+      <label for="email"><b>Email:</b></label>
+      <input type="text" id="email" name="email" required placeholder="Enter Email">
+
+      <label for="gpa"><b>Gpa:</b></label>
+      <input type="number" id="gpa" name="gpa" required placeholder="Enter GPA">
+
+      <button type="submit" class="btn">Thêm</button>
+      <button type="button" class="btn cancel" onclick="closeForm('fromStudent')">Close</button>
+    </form>
+  </div>
+
+  <!-- Popup thêm giảng viên-->
+  <div class="form-popup" id="fromProfessor" style="display:none;">
+    <form class="form-container" id="addProfessorForm">
+      <h1>Thêm giảng viên</h1>
+      <label for="name"><b>Tên:</b></label>
+      <input type="text" id="name" name="name" required placeholder="Enter Name">
+
+      <label for="phone"><b>Số điện thoại:</b></label>
+      <input type="text" id="phone" name="phone" required placeholder="Enter Phone">
+
+      <label for="email"><b>Email:</b></label>
+      <input type="text" id="email" name="email" required placeholder="Enter Email">
+
+      <label for="salary"><b>Lương:</b></label>
+      <input type="number" id="salary" name="salary" required placeholder="Enter Salary">
+
+      <button type="submit" class="btn">Add</button>
+      <button type="button" class="btn cancel" onclick="closeForm('fromProfessor')">Close</button>
+    </form>
+  </div>
+  <!-- Popup sửa sinh viên-->
+  <div class="form-popup" id="fromStudentEdit" style="display:none;">
+    <form class="form-container" id="addStudentForm">
+      <h1>Sửa sinh viên</h1>
+
+      <label for="id"><b>Id:</b></label>
+      <input type="text" id="idStudent" name="idStudent" required placeholder="Enter Id" readonly>
+
+      <label for="name"><b>Tên:</b></label>
+      <input type="text" id="nameStudent" name="nameStudent" required placeholder="Enter Name">
+
+      <label for="phone"><b>Số điện thoại:</b></label>
+      <input type="text" id="phoneStudent" name="phoneStudent" required placeholder="Enter Phone">
+
+      <label for="email"><b>Email:</b></label>
+      <input type="text" id="emailStudent" name="emailStudent" required placeholder="Enter Email">
+
+      <label for="gpa"><b>GPA:</b></label>
+      <input type="number" id="gpaStudent" name="gpaStudent" required placeholder="Enter GPA">
+
+      <button type="submit" class="btn">Sửa</button>
+      <button type="button"  class="btn cancel" onclick="closeForm('fromStudentEdit')">Close</button>
+    </form>
+  </div>
+
+<!-- Popup sửa giảng viên -->
+<div class="form-popup" id="fromProfessorEdit" style="display:none;">
+  <form class="form-container" id="fromProfessorEdit">
+    <h1>Sửa giảng viên</h1>
+
+    <label for="id"><b>Id:</b></label>
+    <input type="text" id="idProfessor" name="idProfessor" required placeholder="Enter Id" readonly>
+
+    <label for="name"><b>Tên:</b></label>
+    <input type="text" id="nameProfessor" name="nameProfessor" required placeholder="Enter Name">
+
+    <label for="phone"><b>Số điện thoại:</b></label>
+    <input type="text" id="phoneProfessor" name="phoneProfessor" required placeholder="Enter Phone">
+
+    <label for="email"><b>Email:</b></label>
+    <input type="text" id="emailProfessor" name="emailProfessor" required placeholder="Enter Email">
+
+    <label for="salary"><b>Salary:</b></label>
+    <input type="number" id="salaryProfessor" name="salaryProfessor" required placeholder="Enter Salary">
+
+    <button type="submit" class="btn">Sửa</button>
+    <button type="button" class="btn cancel" onclick="closeForm('fromProfessorEdit')">Close</button>
+  </form>
+</div>
+
+  <script src="./script.js"></script>
+  <script>
+    function showTable(option) {
+      document.getElementById('studentTable').style.display = option === 'students' ? 'block' : 'none';
+      document.getElementById('leaderTable').style.display = option === 'leaders' ? 'block' : 'none';
+    }
+
+    function openForm() {
+      const selectedOption = document.querySelector('input[name="viewOption"]:checked').value;
+      if (selectedOption === 'students') {
+        document.getElementById('fromStudent').style.display = 'block';
+      } else if (selectedOption === 'leaders') {
+        document.getElementById('fromProfessor').style.display = 'block';
+      }
+    }
+    function closeForm(formId) {
+      document.getElementById(formId).style.display = 'none';
+    }
+    function openFormEdit(){
+      const selectedOption = document.querySelector('input[name="viewOption"]:checked').value;
+      if (selectedOption === 'students') {
+        document.getElementById('fromStudentEdit').style.display = 'block';
+      } else if (selectedOption === 'leaders') {
+        document.getElementById('fromProfessorEdit').style.display = 'block';
+      }
+    }
+    function closeFormEdit(formId) {
+      document.getElementById(formId).style.display = 'none';
+    }
+  </script>
+</body>
+
+</html>
